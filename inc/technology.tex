@@ -1,0 +1,54 @@
+\chapter{Technology} % A different title might be more suitable?
+\label{chap:technology}
+
+% Chapter describing the technologies required for the suggested network.
+
+This chapter explains the different technologies needed to realize the project.
+
+\section{Servers}
+The company has opted to host their servers on-site.
+All the servers will need to be reachable from the internet, and is therefore put in a DMZ at the edge of the network in the HQ location Gjovik.
+
+\subsubsection{Web Server}
+MjøsTaxi wants to allow customers to order rides through a the internet, rather than only having the option of calling the call-center to order a ride.
+
+The company has hired a separate company to design a web-application, which will need to run on a web server.
+
+\subsubsection{Internal Application Server}
+The company has a local intranet application under development. This application will be hosted on an internal application server cluster in the HQ, and will be reachable through the web application for employees both located in the HQ, and from the outside. %We might want to look into this regarding traffic permissions from outside the intranet.
+
+\subsubsection{E-mail Server}
+The company's email will be handled by en email server located in the HQ.
+This server will have a relay in the DMZ, filtering and routing traffic to the main email server.
+
+
+\section{VoIP}
+MjøsTaxi is moving all its landlines over to VoIP.
+Voice Over Internet Protocol relies on a VoIP service provider, meaning most of the work is being done offsite, with a provider that MjøsTaxi has a contract with. \cite{VoIP} 
+The only setup needed on MjøsTaxis end, is making sure the network is set up such that the VoIP phones can reach the internet, to communicate with the VoIP provider.
+
+\section{Networking}
+\subsection{Hardware}
+To set up the network required to provide service to all employees, the networking hardware needed is both switches and routers. % This is probably redundant filler, ngl. Cut it if you feel like it.
+
+\subsection{Mobile Networking}
+Each taxi is equipped with a router connected to a mobile network through a third-party network provider.
+This allows the taxis to communicate with the HQ, as well as payment services for the payment terminals.
+
+\subsection{Protocols}
+\subsubsection{VLAN}
+Virtual Local Area Network protocol.
+VLANs define broadcast domains in a layer 2 network,\cite{VLAN} in our case this can be used to confine network access for certain groups of users.
+% Elaborate enough? 
+
+\subsubsection{VTP}
+VLAN Trunking Protocol.
+This Cisco proprietary protocol propagates the definition of VLAN on the LAN.\cite{VTP} 
+Using this protocol simplifies network configuration, by having a protocol doing the work setting up VLANs.
+%Too informal?
+
+\subsubsection{EIGRP}
+Enhanced Interior Gateway Routing Protocol is a Cisco-proprietary distance-vector routing protocol for automating routing decisions and configuration across a network. \cite{EIGRP}
+
+\subsubsection{EtherChannel}
+EtherChannel is a port link aggregation technology. EtherChannel allows grouping of several physical Ethernet links to create one logical link for redundancy and/or increased speed between two devices. \cite{EtherChannel}

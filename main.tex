@@ -1,0 +1,94 @@
+\documentclass[11pt]{report}
+
+% ------- Configuration -------
+
+% ---- Package inclutions ----
+\usepackage[a4paper, total={6in, 8in}]{geometry} % Uncomment for more "standard" A4 margins.
+%\usepackage[a4paper, margin=1in]{geometry} % Another alternative for 1-inch margins, rather than the LaTeX default 1.875in.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{titlepic}
+\usepackage{hyperref}
+\usepackage{blindtext}
+\usepackage{enumitem}   % Package for list-formatting.
+\usepackage{titlesec, blindtext, color}
+
+
+% --- Hyperref setup ---
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% --- Title formatting ---
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+\titlespacing*{\chapter}{0pt}{0pt}{30pt}
+
+% --- List formatting ---
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{15pt} \item[-] #1}
+}
+
+% ---- Frontpage ----
+\title{NetSec Taxi Company}
+\author{
+    Erlend Einmo\\
+    \and
+    Sander L. Berntsen\\
+    \and
+    Paulius Vizinis\\
+    \and 
+    Nick Zakharov
+    \and 
+    Fisnik Kurti
+}
+
+\titlepic{\vfill\includegraphics[width=0.7\textwidth]{fig/logo_ntnu_u-slagord.png}}
+    
+\date{August 2019}
+
+
+% -------- Document start --------
+\begin{document}
+
+\maketitle % Create frontpage.
+\thispagestyle{empty}
+\clearpage % Formatting
+
+\pagenumbering{roman} % Pagenumbering in roman numerals for TOC etc..
+\tableofcontents % Table of Contents
+\clearpage % Formatting
+\pagenumbering{arabic} % Starting "regular" page numbering.
+
+
+% ------ Content start ------
+% Content written in separate files per chapter in "inc" folder.
+% To add a new chapter, create a new file under inc, and include it below in the correct order, using "\input{inc/example.tex}".
+\addcontentsline{toc}{section}{Executive Summary}      % Manually adding Executive Summary to TOC.
+\input{inc/summary.tex}
+\input{inc/introduction.tex}
+\input{inc/security_policy.tex}
+\input{inc/risk_assesment.tex}
+\input{inc/design.tex}
+\input{inc/technology.tex}
+\input{inc/implementation.tex}
+
+
+
+% ------ Content End ------
+\clearpage
+\bibliographystyle{unsrt} % Set bibliography style.
+\bibliography{bibliography.bib} % Print Bibliography.
+
+% ------ Appendix ------
+
+
+
+\end{document}

@@ -1,0 +1,24 @@
+\chapter{Design}
+\label{chap:design}
+
+\section{Requirements}
+Mjøstaxi's administration has its core working hours from 08:00 to 16:00, Monday through Friday.
+The normal operating hours for taxi drivers Sunday to Thursday are 05:00 to 01:00 the next day, and 05:00 to 03:00 the next day on Fridays and Saturdays. 
+This means that acceptable downtime is around 14.28\% pr week in order to maintain intended operation. 
+
+It is important to note that there is an increased need for uptime during peak hours, mainly Friday and Saturday between 19:00 and 03:00.
+A network downtime in this period can result in order creations and order updates backing up and when the network is restored, there can be a flood of traffic that can result in a denial of service.
+The network design to be able to handle this potential peak increase in sever traffic.
+
+
+
+\section{Solution}
+
+
+
+\section{Redundancy}
+As many of the company's services are hosted on the servers in the HQ, having a redundant link out to the ISP can be beneficial.
+In the case of a network loss, the intranet would be inaccessible from the secondary locations, as well as all rides will have to manually be given out to drivers using the old method of calling the taxis.
+
+This would be most problematic in the peak hours, and during the regular workday when everyone is working in their offices.
+
