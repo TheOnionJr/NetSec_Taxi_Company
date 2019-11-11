@@ -2,9 +2,24 @@
 \label{chap:design}
 
 \section{Requirements}
+Mjøstaxi's maximum tolerable period of distruption (MTPD) derives from two different components: the administration's need to complete their work during ordinary working hours (08:00 to 16:00 Monday-Friday),
+and the IT-System's ability to handle creatings, deletions and updates of orders almost uninterupted.
+
 Mjøstaxi's administration has its core working hours from 08:00 to 16:00, Monday through Friday.
-The normal operating hours for taxi drivers Sunday to Thursday are 05:00 to 01:00 the next day, and 05:00 to 03:00 the next day on Fridays and Saturdays. 
-This means that acceptable downtime is around 14.28\% pr week in order to maintain intended operation. 
+During this time the employees need access to their respective IT resources with relatively low downtime.
+The employees report that they can have a single period 30 min downtime and 45 min total downtime during a single day without much hinderance of their work.
+It is also reported that they can have downtimes like this 5 times a month, if the downtimes are somewhat evenly distributed.
+Based on this info we calculate the MTPD of the administration to be 9.38\% pr day and 2.34\% pr month during ordinary worktime.
+
+
+The normal operating hours for taxi drivers Sunday to Thursday are 05:00 to 01:00 the next day, and 05:00 to 03:00 the next day on Fridays and Saturdays.
+All taxis are connected to a mobile network with 4G routers.
+They receive and update information about their orders by using authenticated Application Programming Interface (API) calls that are TLS encrypted.
+All card transactions are handled by NETS and the network required to handle this is not our responsibility, neither is the mobile network.
+The taxis can store order updates in case of a connection loss so that the taxis can keep operating without mobile network access.
+This is mainly intended for areas with low mobile coverage and it has no measure to prevent flooding Mjøstaxi's network if there is prolonged network downtime in HQ.
+
+This means that acceptable downtime is around 14.28\% pr week in order to maintain intended operation.
 
 It is important to note that there is an increased need for uptime during peak hours, mainly Friday and Saturday between 19:00 and 03:00.
 A network downtime in this period can result in order creations and order updates backing up and when the network is restored, there can be a flood of traffic that can result in a denial of service.
@@ -21,4 +36,3 @@ As many of the company's services are hosted on the servers in the HQ, having a 
 In the case of a network loss, the intranet would be inaccessible from the secondary locations, as well as all rides will have to manually be given out to drivers using the old method of calling the taxis.
 
 This would be most problematic in the peak hours, and during the regular workday when everyone is working in their offices.
-
