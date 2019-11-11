@@ -14,6 +14,10 @@
 \usepackage{enumitem}   % Package for list-formatting.
 \usepackage{titlesec, blindtext, color}
 
+% -- Defining TODO Command %
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
+% \todo{<TODO>} to use.
+
 
 % --- Hyperref setup ---
 \hypersetup{

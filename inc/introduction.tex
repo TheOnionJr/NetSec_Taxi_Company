@@ -25,6 +25,7 @@ The company has hired consultants to design and implement the new required infra
 
 The old system was limited to a call centre with 24/7 availability, where an employee's job is to take calls from potential clients, confirming a drivers availability, manually contacting available drivers, and then confirming the booking with the client. The taximeter is connected to a screen mounted inside the front of the car, as well as a terminal to process payments with a card. At the end of each shift, the drivers will add an end-of-day statement in a folder at the office. 
 
+The company's main income is from customers paying for rides, but the company also makes some money selling advertising space on their cars and website.
 
 \subsection{Technical Service Requirements}
 Our job is to implement a reliable and secure network infrastructure for the company's need of a more modern, robust, and potentially expandable network for a reasonable price. 
@@ -47,9 +48,9 @@ Mainly for customer-service - responding to inquiries regarding booking, cancell
 As well as daily business operations.
 
 \subsubsection{Payment}
-Each taxi has wireless terminals to receive payment after a transportation. It is also possible to receive a monthly bill for the services. The terminals must be able to do local (offline) transactions if temporarily losing connection to HQ.
+Each taxi has wireless terminals to receive payment after a transportation. It is also possible to receive a monthly bill for the services. The terminals must be able to do local (offline) transactions if temporarily losing connection to Headquarters(HQ).
 Local transactions should be possible, as long as the taxi is connected to the internet through their mobile connection. 
-The information about the fares will then be pushed to the HQ database when the service is available again. (This needs to be done in an orderly fashion, as a longer outage could trigger an accidental DDoS when all the taxis try to sync with HQ again.)
+The information about the fares will then be pushed to the HQ database when the service is available again. (This needs to be done in an orderly fashion, as a longer outage could trigger an accidental distributed denial-of-service(DDoS) when all the taxis try to sync with HQ again.)
 
 \subsubsection{WiFi}
 A standard quality of life service for employees, visitors and guests in each branch location. 
@@ -57,15 +58,21 @@ Everybody should be able to connect to the internet anywhere in the building.
 
 \subsubsection{Redundancy}
 As the business transitions over to a digital workflow, and is hosting web-services in-house, redundancy is needed.
-The HQ is the only location that is operation-critical, which warrants redundant links both inside the network, as well as out to the ISP. 
+The HQ is the only location that is operation-critical, which warrants redundant links both inside the network, as well as out to the internet service provider(ISP). 
 The sub-locations are not as important as a network-loss will only lead to minor disruptions to the normal business-operation, because work can still be done without access to the internal application server.
 
 \subsection{Communication needs}
-Most communication in the business is handled by the internal application server, along with email and phone calls.
 
+\subsubsection{Communictaion within the business}
+Most communication within the business, between employees, is handled by the internal application server, along with email and phone calls.
+
+\subsubsection{Taxi Communication}
+Communication between the taxis and HQ is handeled by mobile networks supplied by a third party.
+
+\subsubsection{Other Communictaion} %Needs a better title ngl.
+The Web Server communicates with the outside world either through an application or a web browser on customers smartphones or computers.
 
 \section{Services offered by the business}
-
 
 \subsection{Users}
 The users on the network can be divided into two general groups.
@@ -99,7 +106,7 @@ They can also access a management-VLAN if need be.
 \begin{itemize}[noitemsep]
     \item 2 Network Engineers
         \SubItem{One of the Network Engineers is a Chief Security Officer(CSO). List of required certificates: CCISO, CCNA Security, ISO27001}
-    \item Approx. 2 Help desk support (With some turnaround, as they are mostly apprentices.)
+    \item Approx. 2 Help desk support (With high turnaround, as they are mostly apprentices.)
 
 \end{itemize}
 
@@ -111,14 +118,14 @@ They can also access a management-VLAN if need be.
     \item CEO - Chief Executive Officer
     \item CFO - Chief Financial Officer
     \item CTO - Chief Technology Officer (also Chief Data Officer)
-    \item One Regional Managers per sub-branch.
+    \item One Regional Manager per sub-branch.
     \item All department managers.
     \item One Financial Manager per location.
 \end{itemize}
 
 \hfill
 
-\emph{Tier 2} is for employees that need more access than tier 1. This tier includes financial, HR and marketing.
+\emph{Tier 2} is for employees that need more access than tier 1. This tier includes financial, Human Resources(HR) and marketing.
 \setlist{nolistsep}
 \begin{itemize}[noitemsep]
     \item Financial

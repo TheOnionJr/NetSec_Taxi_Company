@@ -36,3 +36,20 @@ As many of the company's services are hosted on the servers in the HQ, having a 
 In the case of a network loss, the intranet would be inaccessible from the secondary locations, as well as all rides will have to manually be given out to drivers using the old method of calling the taxis.
 
 This would be most problematic in the peak hours, and during the regular workday when everyone is working in their offices.
+
+\section{Server Hosting}
+The company decided on hosting their services in-house, rather than in the cloud.
+In the case that the company decides to go with cloud hosting, the infrastructure can mostly remain the same, except removing the demilitarized zone(DMZ) and its supporting infrastructure in the HQ, simplifying the network.
+
+\todo{INSERT DIAGRAM OF CLOUD-SOLUTION, BASICALLY A COPY OF THE ONE WE HAVE, JUST WITHOUT DMZ}
+
+
+\section{VoIP}
+Most employees in the business will receive an IP phone in their office.
+To facilitate this in the network design, IP phones have their own VLAN that can access the internet, and further access a VoIP service provider, and Quality of Service(QoS) to ensure proper quality, as VoIP is a real-time service. 
+The service provider is a third party telecommunications company that MjøsTaxi will have to sign a deal with.
+
+\section{Tunnelling}
+The different sites are connected with tunnels.
+To have the network effectively extended to each site, the use of a GRE tunnel, with IPsec security is used.
+This approach provides a secure way to transfer data, with high flexibility, allowing the use of protocols like EIGRP.
