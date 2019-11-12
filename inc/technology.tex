@@ -63,13 +63,13 @@ Enhanced Interior Gateway Routing Protocol is a Cisco-proprietary distance-vecto
 EtherChannel is a port link aggregation technology. EtherChannel allows grouping of several physical Ethernet links to create one logical link for redundancy and/or increased speed between two devices. \cite{EtherChannel}
 
 \subsubsection{GRE Tunnel}
-Generic Routing Encapsulation is a tunneling protocol developed by Cisco, capable of encapsulating a wide variety of protocol packet types in IP tunnels.
+Generic Routing Encapsulation is a tunneling protocol developed by Cisco, capable of encapsulating a wide variety of protocol packet types in IP tunnels. \cite{CCNP-ROUTE}
 These tunnels can be used to "extend" the network, essentially creating a link over the internet to another site.
 GRE alone does not include any strong security mechanisms protecting its payload, however in conjunction with IPsec it can effectively be turned into a VPN.
 
 \subsubsection{IPsec}
 To secure the GRE tunnel, IPsec transport mode is used.
-Transport mode only sees traffic going through an interface, and either encrypts or decrypts it.
+Transport mode only sees traffic going through an interface, and either encrypts or decrypts it. 
 The combination of GRE tunnel and IPsec encryption effectively creates a VPN connection between sites in a cost-effective way.
 
 \subsection{Standards}
