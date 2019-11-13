@@ -6,7 +6,7 @@
 
 \subsection{The Case}
 The case is to help a company with identifying and analyzing their communcation needs, as well as designing and implementing a solution supporting these needs. 
-Our case regards the taxi company, MjøsTaxi, which has three locations around Mjøsa; Gjøvik, Lillehammer and Hamar.
+Our case regards the taxi company MjøsTaxi, which has three locations around Mjøsa; Gjøvik, Lillehammer and Hamar.
 The three locations have 1 million, 600 000 and 400 000 inhabitants respectively.
 
 
@@ -21,40 +21,46 @@ MjøsTaxi currently has 2500 employees, 2000 of which are taxi-drivers, offering
 
 As the company is expanding, the old phone-based booking-system is being replaced with a network-based app, allowing for bookings through a web-interface, as well as a intranet application allowing employees to access and fill data about their workday. %%%% PLACEHOLDER.
 Booking through phone is still a feature likely to be utilized by many customers, but will be moved over to VoIP.
-The company has hired consultants to design and implement the new required infrastructure, as well as teaching the IT-department the infrastructure to ensure their ability to provide proper productivity and reliability.
+The company has hired consultants to design and implement the new required infrastructure, and to teach the IT-department the infrastructure to ensure their ability to provide proper productivity and reliability.
 
-The old system was limited to a call centre with 24/7 availability, where an employee's job is to take calls from potential clients, confirming a drivers availability, manually contacting available drivers, and then confirming the booking with the client. The taximeter is connected to a screen mounted inside the front of the car, as well as a terminal to process payments with a card. At the end of each shift, the drivers will add an end-of-day statement in a folder at the office. 
+The old system was limited to a call centre with 24/7 availability, where an employee's job is to take calls from potential clients, confirming a drivers availability, manually contacting available drivers, and then confirming the booking with the client. The taximeter is connected to a screen mounted inside the front of the car, as well as a terminal to process payments with a card. At the end of each shift, the drivers will add an end-of-day statement in a folder at the office. %? Is the statement necessary?
 
 The company's main income is from customers paying for rides, but the company also makes some money selling advertising space on their cars and website.
 
 \subsection{Technical Service Requirements}
 Our job is to implement a reliable and secure network infrastructure for the company's need of a more modern, robust, and potentially expandable network for a reasonable price. 
-The network must support the following list of services.
+The network must support the following services.
 
 \subsubsection{Public website}
 Contains information about the company, its services, and a telephone-number. 
 Booking a fare is also possible through a form on the main-page, which requires storing customer information like name, location, and contact information.
 
 \subsubsection{Intranet}
-The intranet includes a web-server to host the intranet site, which will be used by management to communicate information and news relevant to the business. 
+The intranet includes a server cluster to host the intranet, which will be used by all employees to both get and relay information about their workday. % Clumsy writing.
+The intranet is also used to communicate between branches.
 It also includes databases to store and manage customer information, as well as accounting, logging the employees hours, and individual taximeters.
 %Needs clarification ++
 
 \subsubsection{Phone}
-The main purpose of the phone-services is to take calls from customers, and booking or cancelling transportation on their behalf. The different branches must also be able to communicate with each other.
+The main purpose of the phone-services is to take calls from customers.
+These calls mostly consists of booking or cancelling transportation, as well as some customer support. 
+The different branches must also be able to communicate with each other, outside of the intranet.
 
 \subsubsection{Email}
 Mainly for customer-service - responding to inquiries regarding booking, cancellation, etc.
 As well as daily business operations.
 
 \subsubsection{Payment}
-Each taxi has wireless terminals to receive payment after a transportation. It is also possible to receive a monthly bill for the services. The terminals must be able to do local (offline) transactions if temporarily losing connection to Headquarters(HQ).
+Each taxi has wireless terminals to receive payment after a transportation. It is also possible to receive a monthly bill for the services. 
+The terminals must be able to do local (offline) transactions if temporarily losing connection to Headquarters(HQ).
 Local transactions should be possible, as long as the taxi is connected to the internet through their mobile connection. 
 The information about the fares will then be pushed to the HQ database when the service is available again. (This needs to be done in an orderly fashion, as a longer outage could trigger an accidental distributed denial-of-service(DDoS) when all the taxis try to sync with HQ again.)
 
 \subsubsection{WiFi}
-A standard quality of life service for employees, visitors and guests in each branch location. 
-Everybody should be able to connect to the internet anywhere in the building.
+Necessary for employees to do their work while on the move inside the building. 
+E.G: When they are attending a meeting and need to access external resources like emails, documents etc.
+WiFi should be accessible at most areas of the different offices.
+WiFi access is not business critical, but it is still considered important to conduct meeting activity.
 
 \subsubsection{Redundancy}
 As the business transitions over to a digital workflow, and is hosting web-services in-house, redundancy is needed.
@@ -63,13 +69,13 @@ The sub-locations are not as important as a network-loss will only lead to minor
 
 \subsection{Communication needs}
 
-\subsubsection{Communictaion within the business}
-Most communication within the business, between employees, is handled by the internal application server, along with email and phone calls.
+\subsubsection{Communication within the business}
+Most communication within the business, between employees, is handled by the intranet, along with email and phone calls.
 
 \subsubsection{Taxi Communication}
-Communication between the taxis and HQ is handeled by mobile networks supplied by a third party.
+Communication between the taxis and HQ is handled by mobile networks supplied by a third party.
 
-\subsubsection{Other Communictaion} %Needs a better title ngl.
+\subsubsection{Other Communication} %Needs a better title ngl.
 The Web Server communicates with the outside world either through an application or a web browser on customers smartphones or computers.
 
 \section{Services offered by the business}
@@ -82,15 +88,15 @@ In this group you find customers and guests.
 This user group access the network through the wireless access-points at each location.
 Users in this group will either be customers waiting for a taxi or customer support, or be people that just need some place to access the internet while they are out and about.
 
-Customers ordering through the website also fall under this group, as they are accessing the webserver.
+Customers ordering through the website also fall under this group, as they are accessing the webserver to order rides.
 
 \subsubsection{Employees}
-All remaining users are employees at the company.
+The remaining users are the employees at the company.
 This does not mean all users are treated equally in the network. 
 Employees are divided into different groups, which are then put in separate VLANs.
 
 Employee Groups
-\setlist{nolistsep}         % Removes gap between list-title and lits items.
+%\setlist{nolistsep}         % Removes gap between list-title and list items.
 \begin{itemize}[noitemsep] 
     \item IT-Staff
     \item Tier 1
@@ -105,7 +111,7 @@ They can also access a management-VLAN if need be.
 \setlist{nolistsep}
 \begin{itemize}[noitemsep]
     \item 2 Network Engineers
-        \SubItem{One of the Network Engineers is a Chief Security Officer(CSO). List of required certificates: CCISO, CCNA Security, ISO27001}
+        \SubItem{One of the Network Engineers is a Chief Security Officer(CSO). List of required certificates: CCISO, CCNA Security, familiar with ISO27001.}
     \item Approx. 2 Help desk support (With high turnaround, as they are mostly apprentices.)
 
 \end{itemize}
@@ -125,7 +131,7 @@ They can also access a management-VLAN if need be.
 
 \hfill
 
-\emph{Tier 2} is for employees that need more access than tier 1. This tier includes financial, Human Resources(HR) and marketing.
+\emph{Tier 2} is for employees that need more access than tier 1. This tier includes financial, Human Resources(HR) and marketing department.
 \setlist{nolistsep}
 \begin{itemize}[noitemsep]
     \item Financial

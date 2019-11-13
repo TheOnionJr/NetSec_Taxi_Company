@@ -1,7 +1,8 @@
 \chapter{Design}
 \label{chap:design}
 
-\section{Requirements}
+\section{Requirements}\label{sec:reqirements}
+\subsection{Maximum Tolerable Period of Downtime}
 Mjøstaxi's maximum tolerable period of distruption (MTPD) derives from two different components: the administration's need to complete their work during ordinary working hours (08:00 to 16:00 Monday-Friday),
 and the IT-System's ability to handle creatings, deletions and updates of orders almost uninterupted.
 
@@ -21,31 +22,46 @@ This is mainly intended for areas with low mobile coverage and it has no measure
 
 This means that acceptable downtime is around 14.28\% pr week in order to maintain intended operation.
 
-It is important to note that there is an increased need for uptime during peak hours, mainly Friday and Saturday between 19:00 and 03:00.
+It is important to note that there is an increased need for up time during peak hours, mainly Friday and Saturday between 19:00 and 03:00.
 A network downtime in this period can result in order creations and order updates backing up and when the network is restored, there can be a flood of traffic that can result in a denial of service.
 The network design to be able to handle this potential peak increase in sever traffic.
 
+Branch offices are generally not considered business critical.
+They do not have that many network users and therefore does not require neither high bandwidth or much redundancy.
 
-\section{Redundancy}
-As many of the company's services are hosted on the servers in the HQ, having a redundant link out to the ISP can be beneficial.
-In the case of a network loss, the intranet would be inaccessible from the secondary locations, as well as all rides will have to manually be given out to drivers using the old method of calling the taxis.
 
-This would be most problematic in the peak hours, and during the regular workday when everyone is working in their offices.
+\subsection{Redundancy}
+Redundant links to the ISP will be required in order to achieve the MTPD mentioned in the chapter above.
+
+\subsection{WiFi}
+WiFi is useful to conduct meeting activity.
+There need to be enough capacity and coverage to meet the employees' needs.
+
+\subsection{IP-Phones}
+Most employees in the business will receive an IP phone in their office.
+The phone service provider will provide the routing of phonecalls to and from the company.
+
+
+\subsection{Branch Connectivity}
+The different sites must be connected in some way that will allow internal network traffic to flow between the three sites securely and uninterrupted.
+
+
+\section{Tunnelling}
+The different sites will be connected with GRE tunnels.
+To have the network effectively extended to each site, we will use a GRE tunnel with IPsec security.
+This approach provides a secure way to transfer data, with high flexibility, allowing the use of EIGRP across sites.
+
+\section{VoIP}
+To facilitate the requirements in the network design, IP phones have their own VLAN that can access the internet, and further access a VoIP service provider, and Quality of Service(QoS) to ensure proper quality, as VoIP is a real-time service. 
+The service provider is a third party telecommunications company that MjøsTaxi will have to sign a deal with.
 
 \section{Server Hosting}
 The company decided on hosting their services in-house, rather than in the cloud.
 In the case that the company decides to go with cloud hosting, the infrastructure can mostly remain the same, except removing the demilitarized zone(DMZ) and its supporting infrastructure in the HQ, simplifying the network.
+Having these services hosted off-site also means the need for redundancy in the HQ is unnescesary, reducing costs and topology complexity.
+A logical diagram of a suggested topology for an implementation with cloud hosting can be found in appendix \ref{app:ICT-Cloud}.
 
-\todo{INSERT DIAGRAM OF CLOUD-SOLUTION, BASICALLY A COPY OF THE ONE WE HAVE, JUST WITHOUT DMZ
-MIGHT ADD TO APPENDIX}
 
 
-\section{VoIP}
-Most employees in the business will receive an IP phone in their office.
-To facilitate this in the network design, IP phones have their own VLAN that can access the internet, and further access a VoIP service provider, and Quality of Service(QoS) to ensure proper quality, as VoIP is a real-time service. 
-The service provider is a third party telecommunications company that MjøsTaxi will have to sign a deal with.
 
-\section{Tunnelling}
-The different sites are connected with tunnels.
-To have the network effectively extended to each site, the use of a GRE tunnel, with IPsec security is used.
-This approach provides a secure way to transfer data, with high flexibility, allowing the use of protocols like EIGRP across sites.
+

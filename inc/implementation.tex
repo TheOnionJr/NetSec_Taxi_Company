@@ -1,2 +1,24 @@
 \chapter{Implementation}
 \label{chap:implementation}
+
+\section{Topology}
+Our network design utilises a redundant core architecture in the HQ.
+This is done to preserve network operation in the event of a link or device failure.
+Each branch office has an identical layout of two access layer switches and one router.
+These branch offices are connected to HQ via GRE tunnels.
+
+Refer to appendix \todo{add appendix} for complete network topology.
+
+\section{Redundancy}
+All access layer switches have two links to the routing layer. 
+Each of these links go to a different routing switch which in turn has a minimum of two links to another routing device (Router or L3 switch).
+The router in the branch office does not have a redundant link to another routing device as the branch offices have a high MTPD.
+
+The HQ also has two edge routers that provide a redundant link to the Internet and the branch offices in order to achieve the low MTPD requirement as specified in the requirements \ref{sec:reqirements}.
+
+Link redundancy, load-balancing and loop prevention is handled by EIGRP.
+
+\section{WLAN/WiFi}
+All LightWeight Access Points (LWAP) are controlled by a single controller connected to B1-S3.
+This does give a single point of failure, but WiFi is not considered business critical and therefore it is more cost efficient to just use one controller.
+The LWAPs are spread out to multiple areas and it is estimated that four LWAPs pr area should be sufficient to cover Mjøstaxi's needs.
