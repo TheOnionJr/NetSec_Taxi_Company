@@ -18,14 +18,15 @@ The company has hired a separate company to design a web-application, which will
 The company has a local intranet application under development. This application will be hosted on an internal application server cluster in the HQ, and will be reachable through the web application for employees both located in the HQ, and from the outside. %We might want to look into this regarding traffic permissions from outside the intranet.
 
 \subsubsection{E-mail Server}
-The company's email will be handled by en email server located in the HQ.
+The company's email will be handled by email servers located in each branch.
 This server will have a relay in the DMZ, filtering and routing traffic to the main email server.
+
 
 
 \section{VoIP}
 MjøsTaxi is moving all its landlines over to VoIP.
 Voice Over Internet Protocol relies on a VoIP service provider, meaning most of the work is being done offsite, with a provider that MjøsTaxi has a contract with. \cite{VoIP} 
-The only setup needed on MjøsTaxis end, is making sure the network is set up such that the VoIP phones can reach the internet, to communicate with the VoIP provider.
+The only setup needed on MjøsTaxis end, is making sure the network is set up such that the VoIP phones can reach the internet, to communicate with the VoIP provider, as well as setting up QoS.
 
 \section{Networking}
 \subsection{Hardware}
@@ -71,6 +72,20 @@ GRE alone does not include any strong security mechanisms protecting its payload
 To secure the GRE tunnel, IPsec transport mode is used.
 Transport mode only sees traffic going through an interface, and either encrypts or decrypts it. 
 The combination of GRE tunnel and IPsec encryption effectively creates a VPN connection between sites in a cost-effective way.
+
+\subsubsection{ICMP}
+Internet Control Message Protocol is an internet-layer supporting protocol.
+ICMP provides message packets to report errors and other IP packet processing information back to the source. \cite{ICMP}
+
+\subsection{Security}
+
+\subsubsection{TACACS+}
+Terminal Access Controller Access-Control System Plus is a protocol that handles authentication, authorization and accounting services (AAA).
+TACACS+ separates the AAA elements, allowing for more flexibility compared to e.g. RADIUS.
+\cite{TACACS+}
+
+\subsubsection{Firewall/ACL}
+
 
 \subsection{Standards}
 
