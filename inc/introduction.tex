@@ -4,78 +4,102 @@
 
 \section{Project Description}
 
-\subsection{The Case}
-The case is to help a company with identifying and analyzing their communcation needs, as well as designing and implementing a solution supporting these needs. 
-Our case regards the taxi company MjøsTaxi, which has three locations around Mjøsa; Gjøvik, Lillehammer and Hamar.
-The three locations have 1 million, 600 000 and 400 000 inhabitants respectively.
+\subsection*{The Case}
+%\todo{You can rephrase this first sentence differently...I will use something like this E.G. "The goal of this project is to help MjøsTaxi establish themselves as a market leader in the taxi industry. In order for them to accomplish that, an infrastructure needs to setup that will help the company accomplish that goal....."something a bit more elaborate
+%Try to get ride of the sentence "The case is to..". 
+%Try to get rid off "Our case regards the taxi company Mjøs-Taxi, which has three locatio". You can change it to: "Mjosa Taxi has three (3) locations: 1, 2 and 3"}
 
 
+The goal of this project is to help MjøsTaxi establish themselves as the market leader in the taxi industry, in Norway. In order for them to accomplish that, a modern infrastructure needs to be set up. MjøsTaxi has hired Consulting A/S to help them identify and analyze specific communication needs, as well as designing and implementing a solution supporting these needs. MjøsTaxi has three locations around Mjøsa: Gjøvik with 1 000 000 inhabitants, Lillehammer - 600 000 and Hamar - 400 000.\footnote{Population numbers are fictive and made to be excessively large}
+
+
+%The goal of this project is to help MjøsTaxi with identifying and analyzing their communication needs, as well as designing and implementing a solution supporting these needs. Our case regards the taxi company MjøsTaxi, which has three locations around Mjøsa; Gjøvik, Lillehammer and Hamar. 
+%The three locations have 1 million, 600 000 and 400 000 inhabitants respectively. 
+
+    
 \section{Business Case}
-MjøsTaxi is a company based in Gjøvik, supplying transport services around Mjøsa. 
+MjøsTaxi is a company based in Gjøvik, supplying transport services around lake Mjøsa. 
 The company primarily focuses on taxis, but also provides maxitaxis and even bus services for bigger parties.
-In addition, the company has their own garage, with mechanics providing maintenance for their vehicles.
+In addition, the company has their own garage, with mechanics that provide maintenance for their own vehicles.
 
 Recent growth has enabled the company to to expand its offices to Lillehammer and Hamar as well. 
-Located primarily in the city centres, the clients are people of all ages that needs a reliant way to book their transportation services.
+Located primarily in the city centre, the target group are people of all ages that needs a reliant way to book their transportation services.
 MjøsTaxi currently has 2500 employees, 2000 of which are taxi-drivers, offering its services to a total of 2 million citizens across the three cities.
 
 As the company is expanding, the old phone-based booking-system is being replaced with a network-based app, allowing for bookings through a web-interface, as well as a intranet application allowing employees to access and fill data about their workday. %%%% PLACEHOLDER.
 Booking through phone is still a feature likely to be utilized by many customers, but will be moved over to VoIP.
 The company has hired consultants to design and implement the new required infrastructure, and to teach the IT-department the infrastructure to ensure their ability to provide proper productivity and reliability.
 
-The old system was limited to a call centre with 24/7 availability, where an employee's job is to take calls from potential clients, confirming a drivers availability, manually contacting available drivers, and then confirming the booking with the client. The taximeter is connected to a screen mounted inside the front of the car, as well as a terminal to process payments with a card. At the end of each shift, the drivers will add an end-of-day statement in a folder at the office. %? Is the statement necessary?
+The old system was limited to a call centre with 24/7 availability, where an employee's job was to take calls from potential clients, confirming a drivers availability, manually contacting available drivers, and then confirming the booking with the client. 
 
-The company's main income is from customers paying for rides, but the company also makes some money selling advertising space on their cars and website.
+The desired outcome for MjøsTaxi is that the taximeter should be connected to a screen mounted inside the front of the car, as well as have a terminal to process payments with a card. At the end of each shift, the drivers will add an end-of-day statement in a folder at the office. %? Is the statement necessary?
+
+
+The company's main income is from customers paying for taxi rides, but the company also makes some money selling advertising space on their cars and website.
+
+%\todo{Did you specify later what reliable  is?}
+%\todo{Rephrase the sentence: "for the company's need of a more modern, robust...."}
 
 \subsection{Technical Service Requirements}
-Our job is to implement a reliable and secure network infrastructure for the company's need of a more modern, robust, and potentially expandable network for a reasonable price. 
-The network must support the following services.
+Our job is to implement a more modern, robust and secure network infrastructure for the company's need of a more modern, robust, and potentially expandable network for a reasonable price. 
+The network must support the following services:
 
+%\todo{Rephrase it. It is implied that a telephone number is included as part of the contact information. If you want to explicitly tell that a phone number is included, you can say something like this "The public website contains the company's contact information, the services offered, and the telephone-number(s) clients can use to order a taxi.....?"}
 \subsubsection{Public website}
-Contains information about the company, its services, and a telephone-number. 
+\vspace{-0.6em}
+Contains information about the company, its services, and a telephone-number(s) with which clients can order a taxi or contact support.. 
 Booking a fare is also possible through a form on the main-page, which requires storing customer information like name, location, and contact information.
 
-\subsubsection{Intranet}
+%\todo{This needs triple rephrasing!!! "The intranet includes a server cluster to host the intranet"...It is a bit unclear. What is the intranet?}
+\subsubsection{Internal network - Intranet}
+\vspace{-0.6em}
 The intranet includes a server cluster to host the intranet, which will be used by all employees to both get and relay information about their workday. % Clumsy writing.
 The intranet is also used to communicate between branches.
 It also includes databases to store and manage customer information, as well as accounting, logging the employees hours, and individual taximeters.
 %Needs clarification ++
 
 \subsubsection{Phone}
+\vspace{-0.6em}
 The main purpose of the phone-services is to take calls from customers.
 These calls mostly consists of booking or cancelling transportation, as well as some customer support. 
 The different branches must also be able to communicate with each other, outside of the intranet.
 
 \subsubsection{Email}
-Mainly for customer-service - responding to inquiries regarding booking, cancellation, etc.
-As well as daily business operations.
+\vspace{-0.6em}
+Mainly for daily business operation and customer-service e.g. responding to inquiries regarding booking, cancellation, etc.
 
 \subsubsection{Payment}
+\vspace{-0.6em}
 Each taxi has wireless terminals to receive payment after a transportation. It is also possible to receive a monthly bill for the services. 
 The terminals must be able to do local (offline) transactions if temporarily losing connection to Headquarters(HQ).
 Local transactions should be possible, as long as the taxi is connected to the internet through their mobile connection. 
 The information about the fares will then be pushed to the HQ database when the service is available again. (This needs to be done in an orderly fashion, as a longer outage could trigger an accidental distributed denial-of-service(DDoS) when all the taxis try to sync with HQ again.)
 
 \subsubsection{WiFi}
+\vspace{-0.6em}
 Necessary for employees to do their work while on the move inside the building. 
 E.G: When they are attending a meeting and need to access external resources like emails, documents etc.
 WiFi should be accessible at most areas of the different offices.
 WiFi access is not business critical, but it is still considered important to conduct meeting activity.
 
 \subsubsection{Redundancy}
+\vspace{-0.6em}
 As the business transitions over to a digital workflow, and is hosting web-services in-house, redundancy is needed.
 The HQ is the only location that is operation-critical, which warrants redundant links both inside the network, as well as out to the internet service provider(ISP). 
 The sub-locations are not as important as a network-loss will only lead to minor disruptions to the normal business-operation, because work can still be done without access to the internal application server.
 
 \subsection{Communication needs}
 
-\subsubsection{Communication within the business}
+\subsubsection*{Communication within the business}
+\vspace{-0.6em}
 Most communication within the business, between employees, is handled by the intranet, along with email and phone calls.
 
-\subsubsection{Taxi Communication}
+\subsubsection*{Taxi Communication}
+\vspace{-0.6em}
 Communication between the taxis and HQ is handled by mobile networks supplied by a third party.
 
-\subsubsection{Other Communication} %Needs a better title ngl.
+\subsubsection*{Other Communication} %Needs a better title ngl.
+\vspace{-0.6em}
 The Web Server communicates with the outside world either through an application or a web browser on customers smartphones or computers.
 
 \section{Services offered by the business}
@@ -84,6 +108,7 @@ The Web Server communicates with the outside world either through an application
 The users on the network can be divided into two general groups.
 
 \subsubsection{Customers/Guests}
+\vspace{-0.6em}
 In this group you find customers and guests. 
 This user group access the network through the wireless access-points at each location.
 Users in this group will either be customers waiting for a taxi or customer support, or be people that just need some place to access the internet while they are out and about.
@@ -91,19 +116,20 @@ Users in this group will either be customers waiting for a taxi or customer supp
 Customers ordering through the website also fall under this group, as they are accessing the webserver to order rides.
 
 \subsubsection{Employees}
+\vspace{-0.6em}
 The remaining users are the employees at the company.
 This does not mean all users are treated equally in the network. 
 Employees are divided into different groups, which are then put in separate VLANs.
 
 Employee Groups
 %\setlist{nolistsep}         % Removes gap between list-title and list items.
-\begin{itemize}[noitemsep] 
-    \item IT-Staff
-    \item Tier 1
-    \item Tier 2
-    \item Tier 3
-    \item IP Phones
-\end{itemize}
+%\begin{itemize}[noitemsep] 
+%    \item IT-Staff
+%    \item Tier 1
+%    \item Tier 2
+%    \item Tier 3
+%    \item IP Phones
+%\end{itemize}
 \hfill
 
 \emph{IT-staff} is in their own group, and have more access than others on the network.

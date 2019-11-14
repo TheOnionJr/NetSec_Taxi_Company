@@ -2,23 +2,71 @@
 \label{chap:implementation}
 
 \section{Topology}
-Our network design utilises a redundant core architecture in the HQ.
+
+To fulfill the previously mentioned requirements, our network topology in each branch follows the Cisco hierarchical network model, which mainly divides the network into 3 separate layers; access, distribution and core layer.
+The topology at the HQ consists of all 3 layers, while other branches consists of a collapsed-core topology. 
+The benefit of such a design is that each layer has clear functions, and can provide the necessary connectivity, load balancing and redundancy that the company requires. %\todo{missing part here???} <--- we are looking into this
 This is done to preserve network operation in the event of a link or device failure.
-Each branch office has an identical layout of two access layer switches and one router.
+Each branch office has an identical layout and consists of two access layer switches and a router.
 These branch offices are connected to HQ via GRE tunnels.
 
-Refer to appendix \todo{add appendix} for complete network topology.
+Refer to appendix \ref{app:ICT} for complete network topology.
 
 \section{Redundancy}
-All access layer switches have two links to the routing layer. 
-Each of these links go to a different routing switch which in turn has a minimum of two links to another routing device (Router or L3 switch).
+
+All access layer switches have two links to the distribution layer, each of these links go to a different routing switch which in turn has a minimum of two links to another routing device (Router or L3 switch).
 The router in the branch office does not have a redundant link to another routing device as the branch offices have a high MTPD.
 
-The HQ also has two edge routers that provide a redundant link to the Internet and the branch offices in order to achieve the low MTPD requirement as specified in the requirements \ref{sec:reqirements}.
+The HQ also has two edge routers that provide a redundant link to the Internet and tunnel to the the branch offices in order to achieve the low MTPD requirement as specified in the requirements \ref{sec:reqirements}.
 
 Link redundancy, load-balancing and loop prevention is handled by EIGRP.
+
+\section{VLANs}
+\subsubsection*{VLAN distribution for the network: }
+\vspace{-0.6em}
+\begin{itemize}[noitemsep] 
+    \item VLAN 11 - Tier 1 Employees
+    \item VLAN 22 - Tier 2 Employees
+    \item VLAN 33 - Tier 3 Employees 
+    \item VLAN 44 - IT-Management
+    \item VLAN 55 - IT-Department
+    \item VLAN 66 - VoIP
+    \item VLAN 77 - Printer
+    \item VLAN 100 - AP
+    \item VLAN 110 - Wireless Guest
+    \item VLAN 120 - Wireless Employee
+    \item VLAN 200 - InnerServers
+    \item VLAN 210 - OuterServers
+    \item VLAN 666 - Blackhole vlan
+    \item VLAN 999 - Native vlan
+\end{itemize}
+
 
 \section{WLAN/WiFi}
 All LightWeight Access Points (LWAP) are controlled by a single controller connected to B1-S3.
 This does give a single point of failure, but WiFi is not considered business critical and therefore it is more cost efficient to just use one controller.
 The LWAPs are spread out to multiple areas and it is estimated that four LWAPs pr area should be sufficient to cover Mjøstaxi's needs.
+
+
+\section{Security}
+\subsection{Layer 2}
+To prevent CAM table overflow attacks, we have enabled port-security on all switch ports, allowing a maximum of 2 mac-addresses to be learned (dynamically), and set the violation mode to shutdown.
+STP is protected by enabling root guard on all non root ports on a switch, which allows the device to participate in the STP process as long as it is not trying to become the root. Root guard has been implemented to protect the root bridge from being modified. Recovery from a violation is automatic.
+
+BPDU guard has been enabled on ports that should not be sending BPDUs (such as trunk ports), to protect the STP from attacks and spoofing.
+
+
+All unused ports are set to access vlan 666 (blackhole-vlan), and shut down.
+
+\subsection{Layer 3}
+EIGRP should use the HMAC-SHA-25 feature for neighbor authentication. 
+The GRE-tunnels are secured using IPsec transport mode using ISAKMP. Currently there is only one policy that is configured and can be accepted, which uses a pre-shared key for authentication, aes 256 for encryption, and sha256 for integrity, and DH group 19 for key exchange in phase 2 tunnels. We use pre-shared keys for the phase 1 tunnel because the network is mostly static, and we expect only one branch to be added at a time, which makes new tunnels easily configurable.
+
+%\todo{what do you mean by general? ftp, http, https??. Perhaps you can state:...access to the most common internet protocols?? or web access} 
+
+\subsection{ACL}
+All employees need access to the internet (HTTP \& HTTPS), email (SMTP), payment system and the intranet server.
+Everyone associated with the Finances Department need access to the financial database. 
+The administration needs access to the FTP server.
+And finally the IT department is divided into two parts: The 1st line who does not need any more access beyond a normal employee and the network and infrastructure administrators who need access to every host on the network.
+

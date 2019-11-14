@@ -2,47 +2,62 @@
 \label{chap:design}
 
 \section{Requirements}\label{sec:reqirements}
-\subsection{Maximum Tolerable Period of Downtime}
-Mjøstaxi's maximum tolerable period of distruption (MTPD) derives from two different components: the administration's need to complete their work during ordinary working hours (08:00 to 16:00 Monday-Friday),
+\subsection*{Maximum Tolerable Period of Downtime(MTPD)}
+\vspace{-0.6em}
+MTPD derives from two different components: the administration's need to complete their work during ordinary working hours (08:00 to 16:00 Monday-Friday),
 and the IT-System's ability to handle creatings, deletions and updates of orders almost uninterupted.
 
+\subsubsection*{Administration}
+\vspace{-0.6em}
 Mjøstaxi's administration has its core working hours from 08:00 to 16:00, Monday through Friday.
 During this time the employees need access to their respective IT resources with relatively low downtime.
-The employees report that they can have a single period 30 min downtime and 45 min total downtime during a single day without much hinderance of their work.
-It is also reported that they can have downtimes like this 5 times a month, if the downtimes are somewhat evenly distributed.
+%\todo{question: The employees report that they can have a single period of 30 minutes without network connectivity, more than that is not acceptable as they will not be able to perform their work..is this similar to what you want to make clear?  Yes, i will fix this}
+The employees report that they can have a single period of 30 minutes without network connectivity. 
+If downtime exceeds 45 minutes in a single day, they will suffer a loss in productivity that they report to be unacceptable. %If they  downtime exceeds the 45 minutes total connectivity loss during a single day.
+They report that they can have downtimes like this 5 times a month, if the downtimes are somewhat evenly distributed.
 Based on this info we calculate the MTPD of the administration to be 9.38\% pr day and 2.34\% pr month during ordinary worktime.
 
+\subsubsection*{IT Systems}
+\vspace{-0.6em}
+The IT Department estimate that their servers can handle the number of order updates that 800 taxis generate over a 25 min period of time.
+After this initial dramatic increase in traffic the order system will take about 90 minutes to fully recover and start operating normally.
+Both the Economy Department and the IT Department agrees that downtime in the ordering system can be problematic as there is a chance for order information to disappear when systems are put under a lot of stress. 
+%\todo{If there is a big difference between income and the number of orders, legal issues that the company wants to avoid can arise e.g. money laundry investigations, OR, To avoid legal issues, the company needs to make sure that there is not a mismatch  between income and the number of orders.......}
+If there is a big difference between income and the number of orders, legal issues that the company wants to avoid can arise e.g. money laundry investigations.
+This can both be costly and lead to a loss of reputation. This is something the company wants to avoid at all costs.
+Therefore they set a requirement of 50 min total downtime pr month with a maximum downtime of 25 min pr incident. 
+This gives us a MTPD of 0.13\%.
 
-The normal operating hours for taxi drivers Sunday to Thursday are 05:00 to 01:00 the next day, and 05:00 to 03:00 the next day on Fridays and Saturdays.
+\subsubsection*{Taxi Drivers}
+\vspace{-0.6em}
+The normal operating hours for taxi driver are Sunday to Thursday from 05:00 to 01:00 the next day, and from 05:00 to 03:00 the next day on Fridays and Saturdays.
 All taxis are connected to a mobile network with 4G routers.
 They receive and update information about their orders by using authenticated Application Programming Interface (API) calls that are TLS encrypted.
 All card transactions are handled by NETS and the network required to handle this is not our responsibility, neither is the mobile network.
 The taxis can store order updates in case of a connection loss so that the taxis can keep operating without mobile network access.
 This is mainly intended for areas with low mobile coverage and it has no measure to prevent flooding Mjøstaxi's network if there is prolonged network downtime in HQ.
 
-This means that acceptable downtime is around 14.28\% pr week in order to maintain intended operation.
-
-It is important to note that there is an increased need for up time during peak hours, mainly Friday and Saturday between 19:00 and 03:00.
-A network downtime in this period can result in order creations and order updates backing up and when the network is restored, there can be a flood of traffic that can result in a denial of service.
-The network design to be able to handle this potential peak increase in sever traffic.
-
+\subsubsection*{Branch Offices}
 Branch offices are generally not considered business critical.
 They do not have that many network users and therefore does not require neither high bandwidth or much redundancy.
 
 
-\subsection{Redundancy}
+\subsection*{Redundancy}
+\vspace{-0.6em}
 Redundant links to the ISP will be required in order to achieve the MTPD mentioned in the chapter above.
 
-\subsection{WiFi}
+\subsection*{WiFi}
 WiFi is useful to conduct meeting activity.
 There need to be enough capacity and coverage to meet the employees' needs.
 
-\subsection{IP-Phones}
+\subsection*{IP-Phones}
+\vspace{-0.6em}
 Most employees in the business will receive an IP phone in their office.
-The phone service provider will provide the routing of phonecalls to and from the company.
+The phone service provider will provide the routing of phone calls to and from the company.
 
 
-\subsection{Branch Connectivity}
+\subsection*{Branch Connectivity}
+\vspace{-0.6em}
 The different sites must be connected in some way that will allow internal network traffic to flow between the three sites securely and uninterrupted.
 
 
@@ -54,6 +69,23 @@ This approach provides a secure way to transfer data, with high flexibility, all
 \section{VoIP}
 To facilitate the requirements in the network design, IP phones have their own VLAN that can access the internet, and further access a VoIP service provider, and Quality of Service(QoS) to ensure proper quality, as VoIP is a real-time service. 
 The service provider is a third party telecommunications company that MjøsTaxi will have to sign a deal with.
+
+\section{Security}
+\subsection{Intrusion Detection System}
+The access layer switches will have one port open to allow for port mirroring of traffic into an Intrusion Detection System node. 
+The nodes will process and forward the logs to an IDS-Master that will handle log storing and manage alerts.
+
+\subsection{Access-based VLAN}
+The network will utilize access-based VLAN philosophy so that a single host can only reach other hosts with the same permissions and only access the resources that are necessary for the employee to do his/her work.
+
+\subsection{Securing The GRE Tunnels}
+The GRE tunnels will be encrypted with IPsec in order to prevent anyone outside the organization from listening in on the traffic that is going between the different branch-offices and HQ.
+
+\subsection{WiFi Security}
+The guest WiFi will be secured with a WPA2 key that will be displayed inside the waiting rooms of the different waiting rooms.
+
+The staff WiFi will be secured with the use of a RADIUS server. 
+Any device connected to the WiFi is not considered secure and therefore they will all have the same access limitations and there is no need for a more sophisticated system than RADIUS.
 
 \section{Server Hosting}
 The company decided on hosting their services in-house, rather than in the cloud.
